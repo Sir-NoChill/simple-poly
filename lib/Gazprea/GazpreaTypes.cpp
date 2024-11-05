@@ -18,6 +18,21 @@ using namespace mlir::gazprea;
 #define GET_TYPEDEF_CLASSES
 #include "Gazprea/GazpreaOpsTypes.cpp.inc"
 
+//void StructureType::parse(::mlir::AsmParser &odsParser) {
+//
+//}
+//
+//void StructureType::print(::mlir::AsmPrinter &odsPrinter) const {
+//  ::mlir::Builder odsBuilder(getContext());
+//  odsPrinter << "<";
+//  odsPrinter.printStrippedAttrOrType(getTypes());
+//  odsPrinter << ">";
+//}
+
+mlir::ArrayRef<mlir::Type> StructureType::getTypes() const {
+  return getImpl()->getTypes();
+}
+
 void GazpreaDialect::registerTypes() {
   addTypes<
 #define GET_TYPEDEF_LIST

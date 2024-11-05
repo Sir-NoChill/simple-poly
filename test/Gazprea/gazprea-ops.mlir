@@ -1,27 +1,28 @@
-// RUN: gazprea-opt %s
+// RUN: gazprea-opt %s > %t
+// RUN: FileCheck %s < %t
 
 module {
-  func.func @test_gazprea_add_op(%arg0: !gazprea.gazpoly<5>, %arg1: !gazprea.gazpoly<5>) -> !gazprea.gazpoly<5> {
+  func.func @test_gazprea_add_op(%arg0: !gazprea.poly<5>, %arg1: !gazprea.poly<5>) -> !gazprea.poly<5> {
     // CHECK: gazprea.add
-    %ret = gazprea.add %arg0, %arg1 : (!gazprea.gazpoly<5>, !gazprea.gazpoly<5>) -> !gazprea.gazpoly<5>
-    return %ret : !gazprea.gazpoly<5>
-  }
+    %0 = gazprea.add %arg0, %arg1 : (!gazprea.poly<5>, !gazprea.poly<5>) -> !gazprea.poly<5>
 
-  func.func @test_gazprea_sub_op(%arg0: !gazprea.gazpoly<5>, %arg1: !gazprea.gazpoly<5>) -> !gazprea.gazpoly<5> {
     // CHECK: gazprea.sub
-    %ret = gazprea.sub %arg0, %arg1 : (!gazprea.gazpoly<5>, !gazprea.gazpoly<5>) -> !gazprea.gazpoly<5>
-    return %ret : !gazprea.gazpoly<5>
-  }
+    %1 = gazprea.sub %arg0, %arg1 : (!gazprea.poly<5>, !gazprea.poly<5>) -> !gazprea.poly<5>
 
-  func.func @test_gazprea_mul_op(%arg0: !gazprea.gazpoly<5>, %arg1: !gazprea.gazpoly<5>) -> !gazprea.gazpoly<5> {
     // CHECK: gazprea.mul
-    %ret = gazprea.mul %arg0, %arg1 : (!gazprea.gazpoly<5>, !gazprea.gazpoly<5>) -> !gazprea.gazpoly<5>
-    return %ret : !gazprea.gazpoly<5>
-  }
+    %2 = gazprea.mul %arg0, %arg1 : (!gazprea.poly<5>, !gazprea.poly<5>) -> !gazprea.poly<5>
 
-  func.func @test_gazprea_div_op(%arg0: !gazprea.gazpoly<5>, %arg1: !gazprea.gazpoly<5>) -> !gazprea.gazpoly<5> {
     // CHECK: gazprea.div
-    %ret = gazprea.div %arg0, %arg1 : (!gazprea.gazpoly<5>, !gazprea.gazpoly<5>) -> !gazprea.gazpoly<5>
-    return %ret : !gazprea.gazpoly<5>
+    %3 = gazprea.div %arg0, %arg1 : (!gazprea.poly<5>, !gazprea.poly<5>) -> !gazprea.poly<5>
+
+    %4 = arith.constant dense<[1, 2, 3]> : tensor<3xi32>
+    // CHECK: gazprea.from_tensor
+    %5 = gazprea.from_tensor %4 : tensor<3xi32> -> !gazprea.poly<5>
+
+    %6 = arith.constant 7 : i32
+    // CHECK: gazprea.eval
+    %7 = gazprea.eval %5, %6 : (!gazprea.poly<5>, i32) -> i32
+
+    return %5 : !gazprea.poly<5>
   }
 }

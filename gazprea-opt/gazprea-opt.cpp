@@ -21,6 +21,7 @@ int main(int argc, char **argv) {
   // TODO: Register gazprea passes here.
 
   mlir::DialectRegistry registry;
+  mlir::registerAllDialects(registry);
   registry.insert<mlir::gazprea::GazpreaDialect,
                   mlir::arith::ArithDialect, mlir::func::FuncDialect>();
   // Add the following to include *all* MLIR Core dialects, or selectively

@@ -7,8 +7,9 @@ build:
 	cmake -G Ninja .. \
 	  -DMLIR_DIR=$HOME/Code/llvm/llvm-test/lib/cmake/mlir \
 	  -DLLVM_DIR=$HOME/Code/llvm/llvm-test/lib/cmake/llvm \
-	  -DLLVM_EXTERNAL_LIT=/usr/local/bin/lit
+	  -DLLVM_EXTERNAL_LIT=/usr/local/bin/lit -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 	cmake --build . --target check-gazprea -j$(nproc)
+	cp compile_commands.json ../
 
 clean:
 	rm -rf build
