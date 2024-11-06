@@ -27,4 +27,16 @@ def GazpreaSwitchBarFoo: Pass<"gazprea-switch-bar-foo", "::mlir::ModuleOp"> {
   }];
 }
 
+def GazpreaToStandard : Pass<"gazprea-to-standard"> {
+  let summary = "Lower `gazprea` to standard mlir, affine and arith";
+
+  let description = [{ Some description }];
+
+  let dependentDialects = [
+    "mlir::arith::ArithDialect",
+    "mlir::gazprea::GazpreaDialect",
+    "mlir::tensor::TensorDialect"
+  ];
+}
+
 #endif // GAZPREA_PASS

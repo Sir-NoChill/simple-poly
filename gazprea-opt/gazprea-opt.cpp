@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
   mlir::registerAllPasses();
   mlir::gazprea::registerPasses();
   // TODO: Register gazprea passes here.
+  mlir::gazprea::registerGazpreaToStandardPass();
 
   mlir::DialectRegistry registry;
   mlir::registerAllDialects(registry);

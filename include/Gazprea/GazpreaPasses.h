@@ -11,11 +11,16 @@
 #include "Gazprea/GazpreaDialect.h"
 #include "Gazprea/GazpreaOps.h"
 #include "mlir/Pass/Pass.h"
+#include "mlir/Dialect/Arith/IR/Arith.h"
+#include "mlir/Dialect/Tensor/IR/Tensor.h"
 #include <memory>
 
 namespace mlir {
 namespace gazprea {
-#define GEN_PASS_DECL
+#define GEN_PASS_DECL_GAZPREATOSTANDARD
+#include "Gazprea/GazpreaPasses.h.inc"
+
+#define GEN_PASS_DECL_GAZPREASWITCHBARFOO
 #include "Gazprea/GazpreaPasses.h.inc"
 
 #define GEN_PASS_REGISTRATION

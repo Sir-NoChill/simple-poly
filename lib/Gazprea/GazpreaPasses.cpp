@@ -6,6 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 #include "mlir/Dialect/Func/IR/FuncOps.h"
+#include "mlir/IR/MLIRContext.h"
 #include "mlir/IR/PatternMatch.h"
 #include "mlir/Rewrite/FrozenRewritePatternSet.h"
 #include "mlir/Support/LogicalResult.h"
@@ -45,4 +46,15 @@ public:
   }
 };
 } // namespace
+
+#define GEN_PASS_DEF_GAZPREATOSTANDARD
+#include "Gazprea/GazpreaPasses.h.inc"
+struct GazpreaToStandard : impl::GazpreaToStandardBase<GazpreaToStandard> {
+  using GazpreaToStandardBase::GazpreaToStandardBase;
+
+  void runOnOperation() override {
+    MLIRContext *context = &getContext();
+    auto *module = getOperation();
+  }
+};
 } // namespace mlir::gazprea
