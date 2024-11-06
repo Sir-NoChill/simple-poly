@@ -49,6 +49,7 @@ void gazpreaPipelineManager(mlir::OpPassManager &pm) {
   //bufferizationOptions.dumpAliasSets = true;
   pm.addPass(mlir::bufferization::createOneShotBufferizePass(bufferizationOptions));
   mlir::bufferization::BufferDeallocationPipelineOptions deallocationOptions;
+  //FIXME this is probably the wrong way to do this
   pm.addPass(mlir::bufferization::createBufferResultsToOutParamsPass());
   mlir::bufferization::buildBufferDeallocationPipeline(pm, deallocationOptions);
   /**
@@ -62,8 +63,8 @@ void gazpreaPipelineManager(mlir::OpPassManager &pm) {
   pm.addPass(mlir::createConvertFuncToLLVMPass());
   pm.addPass(mlir::createFinalizeMemRefToLLVMConversionPass());
   pm.addPass(mlir::createReconcileUnrealizedCastsPass());
-  /**
   pm.addPass(mlir::createCanonicalizerPass());
+  /**
   */
 
   // pm.addPass(mlir::createFinalizeMemRefToLLVMConversionPass());
