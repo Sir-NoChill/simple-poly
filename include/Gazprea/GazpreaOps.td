@@ -48,7 +48,7 @@ def Gazprea_FooOp : Gazprea_Op<"foo", [Pure, SameOperandsAndResultType]> {
 }
 
 class Gazprea_PolyBinOp<string mnemonic> : Gazprea_Op<mnemonic,
-    [Pure] > {
+    [Pure, SameOperandsAndResultType] > {
   let arguments = (ins Gazprea_Polynomial:$lhs, Gazprea_Polynomial:$rhs);
   let results = (outs Gazprea_Polynomial:$out);
   let assemblyFormat = "$lhs `,` $rhs attr-dict `:` `(` type($lhs) `,` type($rhs) `)` `->` type($out)";
